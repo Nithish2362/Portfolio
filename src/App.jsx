@@ -52,7 +52,7 @@ function Layout() {
       <main className="main-content">
         <section id="home" className="section">
           <img src={profile} alt="Profile" className="profile" />
-          <h2 className="name">Nithishkumar M</h2>
+          <h2 className="name">Nashkumar M</h2>
           <p className="data">
             Software Developer | React | Spring Boot | Java | SQL | HTML | CSS
             <br />
