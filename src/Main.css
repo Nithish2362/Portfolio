@@ -1,0 +1,161 @@
+/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Body styles */
+  body {
+    background-color: #f7f7f7;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  /* Layout container */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* General layout styles */
+  header {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+  
+  h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #333;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Navigation styles */
+  nav {
+    background-color: #444;
+    padding: 15px;
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.2rem;
+  }
+  
+  nav a:hover {
+    color: #ff6347;
+  }
+  
+  /* Main content area */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+  }
+  
+  .main-content section {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  /* Card layout for projects or content sections */
+  .card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .card h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  /* About section */
+  .about-me {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Content page layout */
+  .content-section {
+    margin-top: 40px;
+    text-align: center;
+    max-width: 900px;
+  }
+  
+  .content-section h2 {
+    margin-bottom: 30px;
+  }
+  
+  .content-section p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+  
+    .main-content {
+      padding: 20px;
+    }
+  
+    nav {
+      padding: 10px;
+    }
+  
+    .card {
+      margin-bottom: 20px;
+    }
+  }
+  
