@@ -4,13 +4,71 @@ import "./App.css";
 
 function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+
   const closeMenu = () => {
     setMenuOpen(false);
   };
+
+  const validateFirstName = (name) => {
+    if (name && name[0] !== name[0]?.toUpperCase()) {
+      return "First name must start with Uppercase";
+    }
+    return "";
+  };
+
+  const validateEmail = (email) => {
+    if (!email.endsWith("@gmail.com")) {
+      return "Please use a Gmail address (@gmail.com)";
+    }
+    return "";
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (name === "firstName") {
+      setErrors((prev) => ({ ...prev, firstName: validateFirstName(value) }));
+    } else if (name === "email" && value) { // Only validate email if not empty
+      setErrors((prev) => ({ ...prev, email: validateEmail(value) }));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validate all fields before submission
+    const newErrors = {
+      firstName: validateFirstName(formData.firstName),
+      email: validateEmail(formData.email),
+    };
+
+    setErrors(newErrors);
+
+    // Only submit if no errors
+    if (!newErrors.firstName && !newErrors.email) {
+      e.target.submit(); // Proceed with Formspree submission
+    }
+  };
+
   return (
     <div className="layout-container">
       <header className="header">
@@ -55,30 +113,6 @@ function Layout() {
           <h2 className="name">Nithishkumar M</h2>
           <p className="data">
             Software Developer | React | Spring Boot | Java | SQL | HTML | CSS
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
           </p>
         </section>
         <section id="about" className="section">
@@ -92,36 +126,6 @@ function Layout() {
             building scalable and user-friendly applications. My focus is on
             creating clean, maintainable code and delivering seamless user
             experiences.
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . .
-            <br />
-            . . . . . . . <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . .
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . .
-            <br />
-            <br />
-            . . . . . . . . .
-            <br />
-            <br />. . . . . .
           </p>
         </section>
         <section id="content" className="section">
@@ -159,43 +163,96 @@ function Layout() {
             <div className="project-card">
               <h3>Project 3</h3>
               <p>Description of project 3</p>
-              <p>
-                nk n nk k
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />
-                . . . . . .
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />
-                . . . . . .
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />
-                . . . . . . . . .
-                <br />
-                <br />. . . . . .
-              </p>
+              <p>nk n nk k</p>
             </div>
           </div>
         </section>{" "}
-        <section id="contact" className="section">
+        <form
+          action="https://formspree.io/f/mpwplvbg"
+          method="POST"
+          className="section"
+          id="contact"
+          onSubmit={handleSubmit}
+        >
           <h2>Contact</h2>
-          <p>Get in touch with me:</p>
-          <ul>
-            <li>Email: [Your Email Address]</li>
-            <li>Phone: [Your Phone Number]</li>
-          </ul>
-        </section>
+          <p>contact Info :</p>
+          <p>Email : kumarnithish941@gmail.com</p>
+          <p>Phone : +91 6666666666</p>
+          <p>Address : 123 Main St, City, Country</p>
+          <br />
+          <div className="contact">
+            <div className="form-group">
+              <label className="label" htmlFor="firstName">
+                First Name
+              </label>
+              <input
+                className={`input ${errors.firstName ? "error" : ""}`}
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+              />
+              {errors.firstName && (
+                <div className="error-message">{errors.firstName}</div>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="label" htmlFor="lastName">
+                Last Name
+              </label>
+              <input
+                className="input"
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="label" htmlFor="email">
+                Email
+              </label>
+              <input
+                className={`input ${errors.email ? "error" : ""}`}
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+              />
+              {errors.email && (
+                <div className="error-message">{errors.email}</div>
+              )}
+            </div>
+
+            <div className="form-group">
+              <label className="label" htmlFor="message">
+                Message
+              </label>
+              <textarea
+                className="input"
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+
+            <button className="button" type="submit">
+              Send
+            </button>
+          </div>
+        </form>
       </main>
     </div>
   );
