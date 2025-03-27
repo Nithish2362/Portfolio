@@ -278,6 +278,20 @@ h2 {
 .form-group {
   margin-bottom: 1.5rem;
 }
+.success-message {
+  color: #ff8000;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 /* Mobile Styles */
 @media (max-width: 768px) {
@@ -473,7 +487,6 @@ h2 {
   .contact {
     background: rgba(255, 255, 255, 0.1);
     /* Semi-transparent white */
-    backdrop-filter: blur(10px);
     /* Frosted glass effect */
     border-radius: 15px;
     padding: 2rem;
@@ -672,10 +685,10 @@ h2 {
   .contact {
     background: rgba(255, 255, 255, 0.1);
     /* Semi-transparent white */
-    backdrop-filter: blur(10px);
     /* Frosted glass effect */
     border-radius: 15px;
     padding: 2rem;
+    width: 500px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -723,7 +736,7 @@ h2 {
     background: #13b3c1;
     color: white;
     border: none;
-    padding: 5px 30px;
+    padding: 3px 30px;
     border-radius: 4px;
     font-weight: bold;
     font-size: 1rem;

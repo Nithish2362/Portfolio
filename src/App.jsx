@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import profile from "./assets/nkpro.jpg";
 import "./App.css";
 
@@ -11,6 +11,26 @@ function Layout() {
     message: "",
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [timeoutId]);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      const id = setTimeout(() => {
+        setIsSubmitted(false);
+      }, 2000);
+      setTimeoutId(id);
+
+      return () => clearTimeout(id);
+    }
+  }, [isSubmitted]);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -28,9 +48,12 @@ function Layout() {
   };
 
   const validateEmail = (email) => {
-    if (!email.endsWith("@gmail.com")) {
-      return "Please use a Gmail address (@gmail.com)";
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid Gmail address (example@gmail.com)";
     }
+
     return "";
   };
 
@@ -47,15 +70,14 @@ function Layout() {
     const { name, value } = e.target;
     if (name === "firstName") {
       setErrors((prev) => ({ ...prev, firstName: validateFirstName(value) }));
-    } else if (name === "email" && value) { // Only validate email if not empty
+    } else if (name === "email" && value) {
       setErrors((prev) => ({ ...prev, email: validateEmail(value) }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate all fields before submission
     const newErrors = {
       firstName: validateFirstName(formData.firstName),
       email: validateEmail(formData.email),
@@ -63,9 +85,40 @@ function Layout() {
 
     setErrors(newErrors);
 
-    // Only submit if no errors
     if (!newErrors.firstName && !newErrors.email) {
-      e.target.submit(); // Proceed with Formspree submission
+      setIsSubmitting(true);
+
+      try {
+        const response = await fetch(e.target.action, {
+          method: "POST",
+          body: new FormData(e.target),
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.ok) {
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            message: "",
+          });
+          e.target.reset();
+          setErrors({});
+          setIsSubmitted(true);
+        } else {
+          throw new Error("Form submission failed");
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+        setErrors((prev) => ({
+          ...prev,
+          form: "Submission failed, please try again",
+        }));
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -79,9 +132,9 @@ function Layout() {
           aria-expanded={menuOpen}
           aria-label="Toggle menu"
         >
-          {menuOpen ? "✕" : "☰"} {/* Changes icon based on state */}
+          {menuOpen ? "✕" : "☰"}
         </button>
-        <nav className={`navbar ${menuOpen ? "active" : "☰"}`}>
+        <nav className={`navbar ${menuOpen ? "active" : ""}`}>
           <ul>
             <li>
               <a href="#home" className="nav-link" onClick={closeMenu}>
@@ -131,29 +184,32 @@ function Layout() {
         <section id="content" className="section">
           <h2>My Projects</h2>
           <div className="projects-grid">
-            <div class="project-card">
-              <h3 class="rainbow-title">Tic Tac Toe (Java Swing)</h3>
+            <div className="project-card">
+              <h3 className="rainbow-title">Tic Tac Toe (Java Swing)</h3>
               <br />
               <br />
               <p>Tic Tac Toe game with win detection and turn tracking.</p>
               <br />
               <a
                 href="https://github.com/Nithish2362/TICTAKTOE/releases/download/v1.0/TicTacToe.jar"
-                class="download-button"
+                className="download-button"
               >
                 Download Tic Tac Toe
               </a>
               <br />
-              <br />{" "}
+              <br />
               <p
                 style={{ width: "100%", textAlign: "center", fontSize: "12px" }}
               >
-                NOTE : After downloading the jar file.Run your jar file
-                Example:java -jar TicTacToe.jar (with correct path){" "}
+                NOTE: After downloading the jar file. Run your jar file.
+                Example: java -jar TicTacToe.jar (with correct path)
               </p>
               <br />
-              <a href="https://github.com/Nithish2362/TICTAKTOE" class="button">
-                View Code{" "}
+              <a
+                href="https://github.com/Nithish2362/TICTAKTOE"
+                className="button"
+              >
+                View Code
               </a>
             </div>
             <div className="project-card">
@@ -166,7 +222,7 @@ function Layout() {
               <p>nk n nk k</p>
             </div>
           </div>
-        </section>{" "}
+        </section>
         <form
           action="https://formspree.io/f/mpwplvbg"
           method="POST"
@@ -175,10 +231,10 @@ function Layout() {
           onSubmit={handleSubmit}
         >
           <h2>Contact</h2>
-          <p>contact Info :</p>
-          <p>Email : kumarnithish941@gmail.com</p>
-          <p>Phone : +91 6666666666</p>
-          <p>Address : 123 Main St, City, Country</p>
+          <p>contact Info:</p>
+          <p>Email: kumarnithish941@gmail.com</p>
+          <p>Phone: +91 6666666666</p>
+          <p>Address: 123 Main St, City, Country</p>
           <br />
           <div className="contact">
             <div className="form-group">
@@ -248,9 +304,14 @@ function Layout() {
               ></textarea>
             </div>
 
-            <button className="button" type="submit">
-              Send
+            <button className="button" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "⏳" : "Submit"}
             </button>
+            {isSubmitted && (
+              <div className="success-message">
+                Message sent successfully! I'll get back to you soon.
+              </div>
+            )}
           </div>
         </form>
       </main>
