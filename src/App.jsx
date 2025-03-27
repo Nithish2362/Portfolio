@@ -7,6 +7,7 @@ function Layout() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
+    Mobile: "",
     email: "",
     message: "",
   });
@@ -41,12 +42,36 @@ function Layout() {
   };
 
   const validateFirstName = (name) => {
-    if (name && name[0] !== name[0]?.toUpperCase()) {
-      return "First name must start with Uppercase";
+    // Check if name is empty
+
+    if (!name || name.trim() === "") {
+      return "";
     }
+    // Check if name contains only alphabetic characters
+    const nameRegex = /^[A-Za-z]+$/;
+    if (!nameRegex.test(name)) {
+      return "Name must contain only characters";
+    }
+
+    // Check if first character is uppercase
+    if (name[0] !== name[0].toUpperCase()) {
+      return "First name must start with uppercase";
+    }
+
+    // If all checks pass
     return "";
   };
+  const validateMobile = (m) => {
+    // Remove any non-digit characters and the +91 prefix if present
+    const digitsOnly = m.replace(/\D/g, "");
 
+    if (!digitsOnly) return "Mobile number is required";
+    if (digitsOnly.length !== 10) return "Mobile number must be 10 digits";
+    if (!/^[0-9]\d{9}$/.test(digitsOnly))
+      return "Enter a valid Indian mobile number";
+
+    return "";
+  };
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
@@ -59,39 +84,75 @@ function Layout() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Special handling for mobile input
+    if (name === "mobile") {
+      // Remove any non-digit characters
+      const digitsOnly = value.replace(/\D/g, "");
+
+      // If user tries to delete the +91, prevent it
+      if (digitsOnly.length === 0) {
+        setFormData((prev) => ({ ...prev, mobile: "" }));
+        return;
+      }
+
+      // Ensure we don't have more than 10 digits after +91
+      const maxDigits = 10;
+      const limitedDigits = digitsOnly.slice(0, maxDigits);
+
+      setFormData((prev) => ({ ...prev, mobile: limitedDigits }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
 
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
+  const handleMobileFocus = () => {
+    setIsMobileFocused(true);
+  };
 
+  const handleMobileBlur = () => {
+    setIsMobileFocused(false);
+    handleBlur({ target: { name: "mobile", value: formData.mobile } });
+  };
   const handleBlur = (e) => {
     const { name, value } = e.target;
     if (name === "firstName") {
       setErrors((prev) => ({ ...prev, firstName: validateFirstName(value) }));
     } else if (name === "email" && value) {
       setErrors((prev) => ({ ...prev, email: validateEmail(value) }));
+    } else if (name === "mobile") {
+      setErrors((prev) => ({ ...prev, mobile: validateMobile(value) }));
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {
       firstName: validateFirstName(formData.firstName),
+      mobile: validateMobile(formData.mobile),
       email: validateEmail(formData.email),
     };
 
     setErrors(newErrors);
 
-    if (!newErrors.firstName && !newErrors.email) {
+    if (!newErrors.firstName && !newErrors.mobile && !newErrors.email) {
       setIsSubmitting(true);
 
       try {
+        // Create a new FormData object
+        const formDataToSend = new FormData();
+        formDataToSend.append("firstName", formData.firstName);
+        formDataToSend.append("lastName", formData.lastName);
+        formDataToSend.append("mobile", formData.mobile); // Add the prefix when sending
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("message", formData.message);
+
         const response = await fetch(e.target.action, {
           method: "POST",
-          body: new FormData(e.target),
+          body: formDataToSend,
           headers: {
             Accept: "application/json",
           },
@@ -101,6 +162,7 @@ function Layout() {
           setFormData({
             firstName: "",
             lastName: "",
+            mobile: "",
             email: "",
             message: "",
           });
@@ -237,10 +299,9 @@ function Layout() {
           <p>Address: 123 Main St, City, Country</p>
           <br />
           <div className="contact">
+            <br />
             <div className="form-group">
-              <label className="label" htmlFor="firstName">
-                First Name
-              </label>
+              <label className="label" htmlFor="firstName"></label>
               <input
                 className={`input ${errors.firstName ? "error" : ""}`}
                 type="text"
@@ -248,62 +309,82 @@ function Layout() {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
+                placeholder="Enter First Name"
                 onBlur={handleBlur}
                 required
               />
               {errors.firstName && (
                 <div className="error-message">{errors.firstName}</div>
               )}
-            </div>
-
+            </div>{" "}
+            <br />
             <div className="form-group">
-              <label className="label" htmlFor="lastName">
-                Last Name
-              </label>
+              <label className="label" htmlFor="lastName"></label>
               <input
                 className="input"
                 type="text"
                 id="lastName"
                 name="lastName"
+                placeholder="Enter Last Name"
                 value={formData.lastName}
                 onChange={handleChange}
                 required
               />
             </div>
-
+            <br />
             <div className="form-group">
-              <label className="label" htmlFor="email">
-                Email
-              </label>
+              <label className="label" htmlFor="mobile"></label>
+              <div className="mobile-input-container">
+                <input
+                  className={`input ${errors.mobile ? "error" : ""}`}
+                  type="tel"
+                  id="mobile"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleChange}
+                  onFocus={handleMobileFocus}
+                  onBlur={handleMobileBlur}
+                  maxLength="10"
+                  placeholder="Enter 10-digit number"
+                  required
+                />
+              </div>
+              {errors.mobile && (
+                <div className="error-message">{errors.mobile}</div>
+              )}
+            </div>
+            <br />
+            <div className="form-group">
+              <label className="label" htmlFor="email"></label>
               <input
                 className={`input ${errors.email ? "error" : ""}`}
                 type="email"
                 id="email"
                 name="email"
+                placeholder="Enter Your Email"
                 value={formData.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 required
               />
+
               {errors.email && (
                 <div className="error-message">{errors.email}</div>
               )}
             </div>
-
+            <br />
             <div className="form-group">
-              <label className="label" htmlFor="message">
-                Message
-              </label>
+              <label className="label" htmlFor="message"></label>
               <textarea
                 className="input"
                 id="message"
                 name="message"
                 value={formData.message}
+                placeholder="Write a message"
                 onChange={handleChange}
                 required
               ></textarea>
             </div>
-
             <button className="button" type="submit" disabled={isSubmitting}>
               {isSubmitting ? "⏳" : "Submit"}
             </button>
