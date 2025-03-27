@@ -293,11 +293,7 @@ function Layout() {
           onSubmit={handleSubmit}
         >
           <h2>Contact</h2>
-          <p>contact Info:</p>
-          <p>Email: kumarnithish941@gmail.com</p>
-          <p>Phone: +91 6666666666</p>
-          <p>Address: 123 Main St, City, Country</p>
-          <br />
+         
           <div className="contact">
             <br />
             <div className="form-group">
