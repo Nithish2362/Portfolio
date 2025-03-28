@@ -21,6 +21,9 @@ html {
   transform: translateY(-5px);
 }
 
+.certifications-category:hover {
+  transform: translateY(-5px);
+}
 
 .section {
   scroll-margin-top: 100px;
