@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import profile from "./assets/nkpro.jpg";
+import profile from "./assets/bk.jpg";
 import "./App.css";
 
 function Layout() {
@@ -209,11 +209,6 @@ function Layout() {
               </a>
             </li>
             <li>
-              <a href="#content" className="nav-link" onClick={closeMenu}>
-                Projects
-              </a>
-            </li>
-            <li>
               <a href="#contact" className="nav-link" onClick={closeMenu}>
                 Contact
               </a>
@@ -222,27 +217,133 @@ function Layout() {
         </nav>
       </header>
 
+      {/* ......................................................................................................... */}
+
       <main className="main-content">
         <section id="home" className="section">
           <img src={profile} alt="Profile" className="profile" />
           <h2 className="name">Nithishkumar M</h2>
           <p className="data">
-            Software Developer | React | Spring Boot | Java | SQL | HTML | CSS
+           nk
+           nk
+           nk
+           nk
+           nk
+            Software Developer | React | Spring nk
+           nk
+           nk
+           nk
+           nk
+           nk
+           nk
+           nk
+           nk
+           nk
+           nkBoot | Java | SQL | HTML | CSS
+           nk
+           nk
+           nk
+           nk
+           nk
           </p>
         </section>
+
+        {/* ........................................................................................................................................ */}
+        {/* About Me */}
         <section id="about" className="section">
-          <h2>About Me</h2>
-          <p className="data">
-            I specialize in modern web development with React, Spring Boot, and
-            more.
-          </p>
-          <p className="data">
-            With experience in both front-end and back-end technologies, I love
-            building scalable and user-friendly applications. My focus is on
-            creating clean, maintainable code and delivering seamless user
-            experiences.
+          <h2 className="section-title">About Me</h2>
+          <p className="about-text">
+            Passionate software developer with expertise in building full-stack
+            applications using React and Spring Boot. Strong problem-solving
+            skills and a love for clean, efficient code.
           </p>
         </section>
+        {/* ........................................................................................................................................ */}
+        {/* Skills */}
+        <section id="skills" className="section">
+          <h2 className="section-title">Skills</h2>
+          <div className="skills-grid">
+            <div className="skill-category">
+              <h3>Frontend</h3>
+              <ul>
+                <li>React </li>
+                <li>HTML/CSS</li>
+                <li>JavaScript</li>
+              </ul>
+            </div>
+            <div className="skill-category">
+              <h3>Backend</h3>
+              <ul>
+                <li>Spring Boot</li>
+                <li>Java</li>
+                <li>Node.js</li>
+              </ul>
+            </div>
+            <div className="skill-category">
+              <h3>Database</h3>
+              <ul>
+                <li>SQL (MySQL, PostgreSQL)</li>
+                <li>MongoDB</li>
+              </ul>
+            </div>
+            <div className="skill-category">
+              <h3>Tools</h3>
+              <ul>
+                <li>Git</li>
+                <li>Docker</li>
+                <li>AWS (Basics)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        {/* ........................................................................................................................................ */}
+        {/* Education */}
+        <section id="education" className="section">
+          <h2 className="section-title">Education</h2>
+          <div className="education-grid">
+            <div className="education-category">
+            <h3>Hindusthan college of enigineering and technology</h3>
+            <p className="institution">BE Computer Science</p>
+            <p className="duration"> GPA : 8.0     </p>
+            <p className="duration">2020 – 2024   </p>
+            </div>
+            <div className="education-category">
+            <h3>Venus matriculation higher secondary school</h3>
+            <p className="institution">HSC</p>
+            <p className="duration"> 63%</p>
+            <p className="duration">2018 – 2020   </p>
+            </div>
+            <div className="education-category">
+            <h3>sarasu matriculation school</h3>
+            <p className="institution">SSLC</p>
+            <p className="duration">84%</p>
+            <p className="duration">2017 – 2018   </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ........................................................................................................................................ */}
+
+        {/* Certifications (Optional) */}
+        <section id="certifications" className="section">
+          <h2 className="section-title">Certifications</h2>
+          <div className="certifications-grid">
+          <div className="certifications-category">
+            <h3>Udemy</h3>
+            <p className="institution">React - The Complete Guide (incl Hooks, React Router, Redux)</p>
+            </div>
+            <div className="certifications-category">
+            <h3>Udemy</h3>
+            <p className="institution">The Complete Node.js Developer Course (3rd Edition)</p>
+            </div>
+            <div className="certifications-category">
+            <h3>Udemy</h3>
+            <p className="institution">The Complete Web Developer Course 2.0</p>
+            </div>
+          </div>
+        </section>
+        {/* .......................................................................................................................................................... */}
+
         <section id="content" className="section">
           <h2>My Projects</h2>
           <div className="projects-grid">
@@ -261,7 +362,7 @@ function Layout() {
               <br />
               <br />
               <p
-                style={{ width: "100%", textAlign: "center", fontSize: "12px" }}
+                style={{ width: "100%", textAlign: "center", fontSize: "14px" }}
               >
                 NOTE: After downloading the jar file. Run your jar file.
                 Example: java -jar TicTacToe.jar (with correct path)
@@ -285,6 +386,8 @@ function Layout() {
             </div>
           </div>
         </section>
+        {/* /........................................................................................................................................ */}
+
         <form
           action="https://formspree.io/f/mpwplvbg"
           method="POST"
@@ -293,9 +396,8 @@ function Layout() {
           onSubmit={handleSubmit}
         >
           <h2>Contact</h2>
-         
+
           <div className="contact">
-            <br />
             <div className="form-group">
               <label className="label" htmlFor="firstName"></label>
               <input
