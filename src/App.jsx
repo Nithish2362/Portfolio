@@ -209,10 +209,31 @@ function Layout() {
               </a>
             </li>
             <li>
+              <a href="#education" className="nav-link" onClick={closeMenu}>
+          Education
+              </a>
+            </li>
+            <li>
+              <a href="skills" className="nav-link" onClick={closeMenu}>
+                Skills
+              </a>
+            </li>
+            <li>
+              <a href="#certifications" className="nav-link" onClick={closeMenu}>
+          Certificates
+              </a>
+            </li>
+            <li>
+              <a href="#content" className="nav-link" onClick={closeMenu}>
+                Projects
+              </a>
+            </li>
+            <li>
               <a href="#contact" className="nav-link" onClick={closeMenu}>
                 Contact
               </a>
             </li>
+          
           </ul>
         </nav>
       </header>
@@ -224,27 +245,8 @@ function Layout() {
           <img src={profile} alt="Profile" className="profile" />
           <h2 className="name">Nithishkumar M</h2>
           <p className="data">
-           nk
-           nk
-           nk
-           nk
-           nk
-            Software Developer | React | Spring nk
-           nk
-           nk
-           nk
-           nk
-           nk
-           nk
-           nk
-           nk
-           nk
-           nkBoot | Java | SQL | HTML | CSS
-           nk
-           nk
-           nk
-           nk
-           nk
+            nk nk nk nk nk Software Developer | React | Spring nk nk nk nk nk nk
+            nk nk nk nk nkBoot | Java | SQL | HTML | CSS nk nk nk nk nk
           </p>
         </section>
 
@@ -302,22 +304,22 @@ function Layout() {
           <h2 className="section-title">Education</h2>
           <div className="education-grid">
             <div className="education-category">
-            <h3>Hindusthan college of enigineering and technology</h3>
-            <p className="institution">BE Computer Science</p>
-            <p className="duration"> GPA : 8.0     </p>
-            <p className="duration">2020 – 2024   </p>
+              <h3>BE Cse</h3>
+              <p className="institution">Hindusthan college of enigineering and technology</p>
+              <p className="duration">8.0</p>
+              <p className="duration">2020 – 2024 </p>
             </div>
             <div className="education-category">
-            <h3>Venus matriculation higher secondary school</h3>
-            <p className="institution">HSC</p>
-            <p className="duration"> 63%</p>
-            <p className="duration">2018 – 2020   </p>
+              <h3>Hsc</h3>
+              <p className="institution">Venus matriculation higher secondary school</p>
+              <p className="duration"> 63%</p>
+              <p className="duration">2018 – 2020 </p>
             </div>
             <div className="education-category">
-            <h3>sarasu matriculation school</h3>
-            <p className="institution">SSLC</p>
-            <p className="duration">84%</p>
-            <p className="duration">2017 – 2018   </p>
+              <h3>Sslc</h3>
+              <p className="institution">sarasu matriculation school</p>
+              <p className="duration">84%</p>
+              <p className="duration">2017 – 2018 </p>
             </div>
           </div>
         </section>
@@ -328,17 +330,23 @@ function Layout() {
         <section id="certifications" className="section">
           <h2 className="section-title">Certifications</h2>
           <div className="certifications-grid">
-          <div className="certifications-category">
-            <h3>Udemy</h3>
-            <p className="institution">React - The Complete Guide (incl Hooks, React Router, Redux)</p>
+            <div className="certifications-category">
+              <h3>Udemy</h3>
+              <p className="institution">
+                React - The Complete Guide (incl Hooks, React Router, Redux)
+              </p>
             </div>
             <div className="certifications-category">
-            <h3>Udemy</h3>
-            <p className="institution">The Complete Node.js Developer Course (3rd Edition)</p>
+              <h3>Udemy</h3>
+              <p className="institution">
+                The Complete Node.js Developer Course (3rd Edition)
+              </p>
             </div>
             <div className="certifications-category">
-            <h3>Udemy</h3>
-            <p className="institution">The Complete Web Developer Course 2.0</p>
+              <h3>Udemy</h3>
+              <p className="institution">
+                The Complete Web Developer Course 2.0
+              </p>
             </div>
           </div>
         </section>
@@ -426,7 +434,7 @@ function Layout() {
                 placeholder="Enter Last Name"
                 value={formData.lastName}
                 onChange={handleChange}
-                required
+                required 
               />
             </div>
             <br />
